@@ -10,6 +10,11 @@ on:
     branches:
       - main
 
+permissions:
+  id-token: write      # Required for OIDC login in reusable workflow
+  contents: read       # Required for checkout
+  pull-requests: write # Required for PR commenting in reusable workflow
+
 jobs:
   terraform_ci:
     name: 'Terraform CI (APIM - Dev Env)'
@@ -19,5 +24,5 @@ jobs:
       tfvars_paths: '["../terraform.tfvars", "environments/dev.tfvars"]'
       tfbackend_path: '../terraform.tfbackend'
       backend_config_overrides: '{"key": "apim.tfstate", "container_name": "dev-tfstate"}'
-      environment_name: 'apim-dev-plan'
+      environment_name: 'dev-plan'
     secrets: inherit

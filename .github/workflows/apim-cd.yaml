@@ -20,6 +20,10 @@ on:
           - apply
           - destroy
 
+permissions:
+  id-token: write # Required for OIDC login in reusable workflow
+  contents: read  # Required for checkout
+
 jobs:
   deploy_dev:
     name: 'Deploy APIM Dev'
@@ -29,8 +33,8 @@ jobs:
       tfvars_paths: '["../terraform.tfvars", "environments/dev.tfvars"]'
       tfbackend_path: '../terraform.tfbackend'
       job_prefix: 'dev'
-      plan_environment_name: 'apim-dev-plan'
-      apply_environment_name: 'apim-dev-apply'
+      plan_environment_name: 'dev-plan'
+      apply_environment_name: 'dev-apply'
       backend_config_overrides: '{"key": "apim.tfstate", "container_name": "dev-tfstate"}'
       tf_action: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tf_action || 'apply' }}
     secrets: inherit
@@ -45,8 +49,8 @@ jobs:
       tfvars_paths: '["../terraform.tfvars", "environments/prod.tfvars"]'
       tfbackend_path: '../terraform.tfbackend'
       job_prefix: 'prod'
-      plan_environment_name: 'apim-prod-plan'
-      apply_environment_name: 'apim-prod-apply'
+      plan_environment_name: 'prod-plan'
+      apply_environment_name: 'prod-apply'
       backend_config_overrides: '{"key": "apim.tfstate", "container_name": "prod-tfstate"}'
       tf_action: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tf_action || 'apply' }}
     secrets: inherit
