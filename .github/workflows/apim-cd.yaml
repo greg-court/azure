@@ -1,4 +1,4 @@
-name: 'Terraform Multi-Stage Deploy (APIM)'
+name: 'APIM Terraform CD'
 
 on:
   push:

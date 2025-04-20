@@ -1,4 +1,4 @@
-name: 'Terraform PR Validation (APIM)'
+name: 'APIM Terraform CI'
 
 on:
   pull_request:
