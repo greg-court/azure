@@ -1,0 +1,50 @@
+name: 'Terraform Multi-Stage Deploy (APIM)'
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apim/**'
+      - '.github/workflows/apim-cd.yml'
+  workflow_dispatch:
+    inputs:
+      tf_action:
+        description: "Terraform action ('apply' or 'destroy')"
+        required: true
+        default: 'apply'
+        type: choice
+        options:
+          - apply
+          - destroy
+
+jobs:
+  deploy_dev:
+    name: 'Deploy APIM Dev'
+    uses: greg-court/cicd-templates/.github/workflows/terraform-cd.yml@main
+    with:
+      working_directory: 'apim'
+      tfvars_file: 'environments/dev.tfvars'
+      tfbackend_file: 'environments/dev.tfbackend'
+      job_prefix: 'dev'
+      plan_environment_name: 'apim-dev-plan'
+      apply_environment_name: 'apim-dev-apply'
+      backend_config_overrides: '{"key": "apim.tfstate", "container_name": "dev-tfstate"}'
+      tf_action: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tf_action || 'apply' }}
+    secrets: inherit # Inherit AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_SUBSCRIPTION_ID from respective environment contexts
+
+  deploy_prod:
+    name: 'Deploy APIM Prod'
+    needs: deploy_dev
+    if: needs.deploy_dev.result == 'success'
+    uses: greg-court/cicd-templates/.github/workflows/terraform-cd.yml@main
+    with:
+      working_directory: 'apim'
+      tfvars_file: 'environments/prod.tfvars'
+      tfbackend_file: 'environments/prod.tfbackend'
+      job_prefix: 'prod'
+      plan_environment_name: 'apim-prod-plan'
+      apply_environment_name: 'apim-prod-apply'
+      backend_config_overrides: '{"key": "apim.tfstate", "container_name": "prod-tfstate"}'
+      tf_action: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tf_action || 'apply' }}
+    secrets: inherit # Inherit AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_SUBSCRIPTION_ID from respective environment contexts

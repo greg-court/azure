@@ -1,0 +1,21 @@
+name: 'Terraform PR Validation (APIM)'
+
+on:
+  pull_request:
+    paths:
+      - 'apim/**'
+      - '.github/workflows/apim-ci.yml'
+    branches:
+      - main
+
+jobs:
+  terraform_ci:
+    name: 'Terraform CI (APIM - Dev Env)'
+    uses: greg-court/cicd-templates/.github/workflows/terraform-ci.yml@main
+    with:
+      working_directory: 'apim'
+      tfvars_file: 'environments/dev.tfvars'
+      tfbackend_file: 'environments/dev.tfbackend'
+      backend_config_overrides: '{"key": "apim.tfstate", "container_name": "dev-tfstate"}'
+      environment_name: 'apim-dev-plan'
+    secrets: inherit # Inherit AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_SUBSCRIPTION_ID from environment/repo context
