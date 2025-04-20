@@ -4,8 +4,8 @@ on:
   pull_request:
     paths:
       - 'apim/**'
-      - 'terraform.tfvars'         # Added root tfvars
-      - 'terraform.tfbackend'      # Added root tfbackend
+      - 'terraform.tfvars'
+      - 'terraform.tfbackend'
       - '.github/workflows/apim-ci.yml'
     branches:
       - main
@@ -13,7 +13,7 @@ on:
 jobs:
   terraform_ci:
     name: 'Terraform CI (APIM - Dev Env)'
-    uses: greg-court/cicd-templates/.github/workflows/terraform-ci.yml@main
+    uses: greg-court/cicd-templates/.github/workflows/terraform-ci.yaml@main
     with:
       working_directory: 'apim'
       tfvars_paths: '["../terraform.tfvars", "environments/dev.tfvars"]'

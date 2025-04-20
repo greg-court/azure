@@ -6,8 +6,8 @@ on:
       - main
     paths:
       - 'apim/**'
-      - 'terraform.tfvars'         # Added root tfvars
-      - 'terraform.tfbackend'      # Added root tfbackend
+      - 'terraform.tfvars'
+      - 'terraform.tfbackend'
       - '.github/workflows/apim-cd.yml'
   workflow_dispatch:
     inputs:
@@ -23,7 +23,7 @@ on:
 jobs:
   deploy_dev:
     name: 'Deploy APIM Dev'
-    uses: greg-court/cicd-templates/.github/workflows/terraform-cd.yml@main
+    uses: greg-court/cicd-templates/.github/workflows/terraform-cd.yaml@main
     with:
       working_directory: 'apim'
       tfvars_paths: '["../terraform.tfvars", "environments/dev.tfvars"]'
@@ -39,7 +39,7 @@ jobs:
     name: 'Deploy APIM Prod'
     needs: deploy_dev
     if: needs.deploy_dev.result == 'success'
-    uses: greg-court/cicd-templates/.github/workflows/terraform-cd.yml@main
+    uses: greg-court/cicd-templates/.github/workflows/terraform-cd.yaml@main
     with:
       working_directory: 'apim'
       tfvars_paths: '["../terraform.tfvars", "environments/prod.tfvars"]'
