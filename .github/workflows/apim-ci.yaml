@@ -6,7 +6,7 @@ on:
       - 'apim/**'
       - 'terraform.tfvars'
       - 'terraform.tfbackend'
-      - '.github/workflows/apim-ci.yml'
+      - '.github/workflows/apim-ci.yaml'
     branches:
       - main
 

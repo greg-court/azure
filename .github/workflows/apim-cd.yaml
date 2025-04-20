@@ -8,7 +8,7 @@ on:
       - 'apim/**'
       - 'terraform.tfvars'
       - 'terraform.tfbackend'
-      - '.github/workflows/apim-cd.yml'
+      - '.github/workflows/apim-cd.yaml'
   workflow_dispatch:
     inputs:
       tf_action:
