@@ -23,6 +23,6 @@ jobs:
       working_directory: 'apim'
       tfvars_paths: '["../terraform.tfvars", "environments/dev.tfvars"]'
       tfbackend_path: '../terraform.tfbackend'
-      backend_config_overrides: '{"key": "apim.tfstate", "container_name": "sub-dev-tfstate"}'
+      backend_config_overrides: '{"key": "apim.tfstate", "container_name": "tfstate-sub-dev"}'
       environment_name: 'dev-plan'
     secrets: inherit

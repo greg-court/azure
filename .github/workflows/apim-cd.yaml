@@ -35,7 +35,7 @@ jobs:
       job_prefix: 'dev'
       plan_environment_name: 'dev-plan'
       apply_environment_name: 'dev-apply'
-      backend_config_overrides: '{"key": "apim.tfstate", "container_name": "sub-dev-tfstate"}'
+      backend_config_overrides: '{"key": "apim.tfstate", "container_name": "tfstate-sub-dev"}'
       tf_action: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tf_action || 'apply' }}
     secrets: inherit
 
@@ -51,6 +51,6 @@ jobs:
       job_prefix: 'prod'
       plan_environment_name: 'prod-plan'
       apply_environment_name: 'prod-apply'
-      backend_config_overrides: '{"key": "apim.tfstate", "container_name": "sub-prod-tfstate"}'
+      backend_config_overrides: '{"key": "apim.tfstate", "container_name": "tfstate-sub-prod"}'
       tf_action: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tf_action || 'apply' }}
     secrets: inherit
