@@ -4,6 +4,8 @@ on:
   pull_request:
     paths:
       - 'apim/**'
+      - 'terraform.tfvars'         # Added root tfvars
+      - 'terraform.tfbackend'      # Added root tfbackend
       - '.github/workflows/apim-ci.yml'
     branches:
       - main
@@ -14,8 +16,8 @@ jobs:
     uses: greg-court/cicd-templates/.github/workflows/terraform-ci.yml@main
     with:
       working_directory: 'apim'
-      tfvars_file: 'environments/dev.tfvars'
-      tfbackend_file: 'environments/dev.tfbackend'
+      tfvars_paths: '["../terraform.tfvars", "environments/dev.tfvars"]'
+      tfbackend_path: '../terraform.tfbackend'
       backend_config_overrides: '{"key": "apim.tfstate", "container_name": "dev-tfstate"}'
       environment_name: 'apim-dev-plan'
-    secrets: inherit # Inherit AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_SUBSCRIPTION_ID from environment/repo context
+    secrets: inherit

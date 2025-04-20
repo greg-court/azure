@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - 'apim/**'
+      - 'terraform.tfvars'         # Added root tfvars
+      - 'terraform.tfbackend'      # Added root tfbackend
       - '.github/workflows/apim-cd.yml'
   workflow_dispatch:
     inputs:
@@ -24,14 +26,14 @@ jobs:
     uses: greg-court/cicd-templates/.github/workflows/terraform-cd.yml@main
     with:
       working_directory: 'apim'
-      tfvars_file: 'environments/dev.tfvars'
-      tfbackend_file: 'environments/dev.tfbackend'
+      tfvars_paths: '["../terraform.tfvars", "environments/dev.tfvars"]'
+      tfbackend_path: '../terraform.tfbackend'
       job_prefix: 'dev'
       plan_environment_name: 'apim-dev-plan'
       apply_environment_name: 'apim-dev-apply'
       backend_config_overrides: '{"key": "apim.tfstate", "container_name": "dev-tfstate"}'
       tf_action: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tf_action || 'apply' }}
-    secrets: inherit # Inherit AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_SUBSCRIPTION_ID from respective environment contexts
+    secrets: inherit
 
   deploy_prod:
     name: 'Deploy APIM Prod'
@@ -40,11 +42,11 @@ jobs:
     uses: greg-court/cicd-templates/.github/workflows/terraform-cd.yml@main
     with:
       working_directory: 'apim'
-      tfvars_file: 'environments/prod.tfvars'
-      tfbackend_file: 'environments/prod.tfbackend'
+      tfvars_paths: '["../terraform.tfvars", "environments/prod.tfvars"]'
+      tfbackend_path: '../terraform.tfbackend'
       job_prefix: 'prod'
       plan_environment_name: 'apim-prod-plan'
       apply_environment_name: 'apim-prod-apply'
       backend_config_overrides: '{"key": "apim.tfstate", "container_name": "prod-tfstate"}'
       tf_action: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tf_action || 'apply' }}
-    secrets: inherit # Inherit AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_SUBSCRIPTION_ID from respective environment contexts
+    secrets: inherit
