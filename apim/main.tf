@@ -11,7 +11,7 @@ data "azurerm_key_vault" "apim_shared" {
 
 data "azurerm_key_vault_secret" "publisher_email" {
   name         = "publisher-email"
-  key_vault_id = 
+  key_vault_id = data.azurerm_key_vault.apim_shared.id
 }
 
 resource "azurerm_api_management" "apim_service" {
