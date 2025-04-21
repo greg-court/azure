@@ -16,7 +16,7 @@ data "azurerm_key_vault_secret" "publisher_email" {
 }
 
 resource "azurerm_api_management" "apim_service" {
-  name                = "apim-${var.env}-${var.loc}-01"
+  name                = "apim-greg-${var.env}-${var.loc}-01"
   location            = var.location
   resource_group_name = azurerm_resource_group.apim.name
   publisher_name      = "Gregorius Industries"
