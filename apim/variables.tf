@@ -1,6 +1,6 @@
 variable "management_group_subscription_id" {
   type        = string
-  description = "The Subscription ID where the management resources (like shared Key Vault) reside. Passed via TF_VAR_ environment variable."
+  description = "Subscription ID where the management resources (like shared Key Vault) reside"
 }
 
 variable "env" {
