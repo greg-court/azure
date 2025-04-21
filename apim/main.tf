@@ -6,7 +6,7 @@ resource "azurerm_resource_group" "apim" {
 data "azurerm_key_vault" "apim_shared" {
   provider            = azurerm.management  
   name                = "kv-apim-shared-${var.loc}-01"
-  resource_group_name = "rg-apim-shared-${var.loc}-01"
+  resource_group_name = "rg-kv-shared-${var.loc}-01"
 }
 
 data "azurerm_key_vault_secret" "publisher_email" {
