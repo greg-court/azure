@@ -14,3 +14,12 @@ variable "loc" {
   description = "Short location code (e.g. uks)"
   default     = "uks"
 }
+
+variable "test" {
+  type        = string
+  description = "testing TF_VAR inheritance from environemnt variables"
+}
+
+output "test" {
+  value = var.test
+}
