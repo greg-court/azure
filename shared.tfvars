@@ -1,1 +1,1 @@
-test = "test"
+management_group_subscription_id = "f01a5d70-cf46-4291-80de-336ee2a894d4"

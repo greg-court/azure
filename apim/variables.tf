@@ -1,3 +1,8 @@
+variable "management_group_subscription_id" {
+  type        = string
+  description = "The Subscription ID where the management resources (like shared Key Vault) reside. Passed via TF_VAR_ environment variable."
+}
+
 variable "env" {
   type        = string
   description = "Environment name (e.g. dev, prod)"
@@ -15,11 +20,8 @@ variable "loc" {
   default     = "uks"
 }
 
-variable "test" {
-  type        = string
-  description = "testing TF_VAR inheritance from environemnt variables"
-}
-
-output "test" {
-  value = var.test
+variable "tags" {
+  type        = map(string)
+  description = "Tags to assign to the resources"
+  default     = {}
 }

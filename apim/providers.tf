@@ -11,3 +11,10 @@ terraform {
 provider "azurerm" {
   features {}
 }
+
+provider "azurerm" {
+  alias   = "management"
+  features {}
+
+  subscription_id = var.management_group_subscription_id 
+}
