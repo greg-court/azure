@@ -3,15 +3,9 @@ resource "azurerm_resource_group" "apim" {
   location = "uksouth"
 }
 
-data "azurerm_key_vault" "apim_shared" {
-  provider            = azurerm.management  
-  name                = "kv-apim-shared-${var.loc}-01"
-  resource_group_name = "rg-apim-shared-${var.loc}-01"
-}
-
 data "azurerm_key_vault_secret" "publisher_email" {
   name         = "publisher-email"
-  key_vault_id = data.azurerm_key_vault.apim_shared.id
+  key_vault_id = "/subscriptions/f01a5d70-cf46-4291-80de-336ee2a894d4/resourceGroups/rg-kv-shared-uks-01/providers/Microsoft.KeyVault/vaults/kv-apim-shared-uks-01"
 }
 
 resource "azurerm_api_management" "apim_service" {
