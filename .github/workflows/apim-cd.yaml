@@ -21,8 +21,8 @@ on:
           - destroy
 
 permissions:
-  id-token: write # Required for OIDC login in reusable workflow
-  contents: read  # Required for checkout
+  id-token: write
+  contents: read
 
 jobs:
   deploy_dev:
@@ -30,14 +30,20 @@ jobs:
     uses: greg-court/cicd-templates/.github/workflows/terraform-cd.yaml@main
     with:
       working_directory: 'apim'
-      tfvars_paths: '["../terraform.tfvars", "environments/dev.tfvars"]'
-      tfbackend_path: '../terraform.tfbackend'
+      tfvars_paths: '["../shared.tfvars", "environments/dev.tfvars"]'
       job_prefix: 'dev'
       plan_environment_name: 'dev-plan'
       apply_environment_name: 'dev-apply'
-      backend_config_overrides: '{"key": "apim.tfstate", "container_name": "tfstate-sub-dev"}'
+      terraform_backend_key: 'apim.tfstate'
       tf_action: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tf_action || 'apply' }}
-    secrets: inherit
+    secrets:
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      BACKEND_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID_MANAGEMENT }}
+      BACKEND_RESOURCE_GROUP_NAME: ${{ secrets.BACKEND_RESOURCE_GROUP_NAME }}
+      BACKEND_STORAGE_ACCOUNT_NAME: ${{ secrets.BACKEND_STORAGE_ACCOUNT_NAME}}
+      BACKEND_STORAGE_CONTAINER_NAME: ${{ secrets.BACKEND_STORAGE_CONTAINER_NAME }}
 
   deploy_prod:
     name: 'Deploy APIM Prod'
@@ -46,11 +52,17 @@ jobs:
     uses: greg-court/cicd-templates/.github/workflows/terraform-cd.yaml@main
     with:
       working_directory: 'apim'
-      tfvars_paths: '["../terraform.tfvars", "environments/prod.tfvars"]'
-      tfbackend_path: '../terraform.tfbackend'
+      tfvars_paths: '["../shared.tfvars", "environments/prod.tfvars"]'
       job_prefix: 'prod'
       plan_environment_name: 'prod-plan'
       apply_environment_name: 'prod-apply'
-      backend_config_overrides: '{"key": "apim.tfstate", "container_name": "tfstate-sub-prod"}'
+      terraform_backend_key: 'apim.tfstate'
       tf_action: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tf_action || 'apply' }}
-    secrets: inherit
+    secrets:
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      BACKEND_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID_MANAGEMENT }}
+      BACKEND_RESOURCE_GROUP_NAME: ${{ secrets.BACKEND_RESOURCE_GROUP_NAME }}
+      BACKEND_STORAGE_ACCOUNT_NAME: ${{ secrets.BACKEND_STORAGE_ACCOUNT_NAME}}
+      BACKEND_STORAGE_CONTAINER_NAME: ${{ secrets.BACKEND_STORAGE_CONTAINER_NAME }}
