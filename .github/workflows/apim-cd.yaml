@@ -35,14 +35,7 @@ jobs:
       apply_environment_name: 'dev-apply'
       terraform_backend_key: 'apim.tfstate'
       tf_action: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tf_action || 'apply' }}
-    secrets:
-      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      BACKEND_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID_MANAGEMENT }}
-      BACKEND_RESOURCE_GROUP_NAME: ${{ secrets.BACKEND_RESOURCE_GROUP_NAME }}
-      BACKEND_STORAGE_ACCOUNT_NAME: ${{ secrets.BACKEND_STORAGE_ACCOUNT_NAME}}
-      BACKEND_STORAGE_CONTAINER_NAME: ${{ secrets.BACKEND_STORAGE_CONTAINER_NAME }}
+    secrets: inherit
 
   deploy_prod:
     name: 'Deploy APIM Prod'
@@ -57,11 +50,4 @@ jobs:
       apply_environment_name: 'prod-apply'
       terraform_backend_key: 'apim.tfstate'
       tf_action: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tf_action || 'apply' }}
-    secrets:
-      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      BACKEND_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID_MANAGEMENT }}
-      BACKEND_RESOURCE_GROUP_NAME: ${{ secrets.BACKEND_RESOURCE_GROUP_NAME }}
-      BACKEND_STORAGE_ACCOUNT_NAME: ${{ secrets.BACKEND_STORAGE_ACCOUNT_NAME}}
-      BACKEND_STORAGE_CONTAINER_NAME: ${{ secrets.BACKEND_STORAGE_CONTAINER_NAME }}
+    secrets: inherit

@@ -23,11 +23,4 @@ jobs:
       tfvars_paths: '["../shared.tfvars", "environments/dev.tfvars"]'
       terraform_backend_key: 'apim.tfstate'
       environment_name: 'dev-plan'
-    secrets:
-      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      BACKEND_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID_MANAGEMENT }}
-      BACKEND_RESOURCE_GROUP_NAME: ${{ secrets.BACKEND_RESOURCE_GROUP_NAME }}
-      BACKEND_STORAGE_ACCOUNT_NAME: ${{ secrets.BACKEND_STORAGE_ACCOUNT_NAME}}
-      BACKEND_STORAGE_CONTAINER_NAME: ${{ secrets.BACKEND_STORAGE_CONTAINER_NAME }}
+    secrets: inherit
