@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "apim" {
-  name     = "rg-apimtest-${var.env}-${var.loc}-01"
+  name     = "rg-apim-${var.env}-${var.loc}-01"
   location = "uksouth"
 }
 
