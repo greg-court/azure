@@ -10,6 +10,7 @@ data "azurerm_key_vault" "apim_shared" {
 }
 
 data "azurerm_key_vault_secret" "publisher_email" {
+  provider     = azurerm.management
   name         = "publisher-email"
   key_vault_id = data.azurerm_key_vault.apim_shared.id
 }
