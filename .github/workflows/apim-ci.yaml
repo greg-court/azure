@@ -4,8 +4,7 @@ on:
   pull_request:
     paths:
       - 'apim/**'
-      - 'terraform.tfvars'
-      - 'terraform.tfbackend'
+      - 'shared.tfvars'
       - '.github/workflows/apim-ci.yaml'
     branches:
       - main

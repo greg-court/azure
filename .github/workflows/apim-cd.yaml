@@ -6,8 +6,7 @@ on:
       - main
     paths:
       - 'apim/**'
-      - 'terraform.tfvars'
-      - 'terraform.tfbackend'
+      - 'shared.tfvars'
       - '.github/workflows/apim-cd.yaml'
   workflow_dispatch:
     inputs:
