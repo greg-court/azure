@@ -37,17 +37,17 @@ jobs:
       tf_action: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tf_action || 'apply' }}
     secrets: inherit
 
-  deploy_prod:
-    name: 'Deploy APIM Prod'
-    needs: deploy_dev
-    if: needs.deploy_dev.result == 'success'
-    uses: greg-court/cicd-templates/.github/workflows/terraform-cd.yaml@main
-    with:
-      working_directory: 'apim'
-      tfvars_paths: '["../shared.tfvars", "environments/prod.tfvars"]'
-      job_prefix: 'prod'
-      plan_environment_name: 'prod-plan'
-      apply_environment_name: 'prod-apply'
-      terraform_backend_key: 'apim.tfstate'
-      tf_action: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tf_action || 'apply' }}
-    secrets: inherit
+  # deploy_prod:
+  #   name: 'Deploy APIM Prod'
+  #   needs: deploy_dev
+  #   if: needs.deploy_dev.result == 'success'
+  #   uses: greg-court/cicd-templates/.github/workflows/terraform-cd.yaml@main
+  #   with:
+  #     working_directory: 'apim'
+  #     tfvars_paths: '["../shared.tfvars", "environments/prod.tfvars"]'
+  #     job_prefix: 'prod'
+  #     plan_environment_name: 'prod-plan'
+  #     apply_environment_name: 'prod-apply'
+  #     terraform_backend_key: 'apim.tfstate'
+  #     tf_action: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tf_action || 'apply' }}
+  #   secrets: inherit
